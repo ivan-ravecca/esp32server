@@ -26,4 +26,13 @@ namespace TimeComp
         strftime(buffer, bufferSize, "%Y-%m-%d %H:%M:%S", &timeinfo);
         return true;
     }
+    String getTimestamp()
+    {
+        char timeString[30];
+        if (!getFormattedTime(timeString, sizeof(timeString)))
+        {
+            return "ERROR:Failed to obtain time";
+        }
+        return String(timeString);
+    }
 }

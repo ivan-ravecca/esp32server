@@ -1,6 +1,7 @@
 #include "CommandHandler.h"
 #include "SerialComp.h"
 #include "TimeComp.h"
+#include "Ifttt.h" // Ensure correct case for the header file
 
 namespace CommandHandler
 {
@@ -69,16 +70,18 @@ namespace CommandHandler
         if (pos4 == -1)
         {
             // Old format without duration
-            int isRepeatedAlarm = data.substring(pos3 + 1).toInt();
+            bool isRepeatedAlarm = data.substring(pos3 + 1).toInt() == 1;
             logSensorData(sensorId, sensorStatus, voltage, isRepeatedAlarm, 0);
+            Ifttt::sendToGoogleSheets(sensorId, sensorStatus == 1 ? "Energized" : "De-energized", String(voltage), isRepeatedAlarm, 0);
             return;
         }
 
         // New format with duration
-        int isRepeatedAlarm = data.substring(pos3 + 1, pos4).toInt();
+        bool isRepeatedAlarm = data.substring(pos3 + 1, pos4).toInt() == 1;
         int durationMinutes = data.substring(pos4 + 1).toInt();
 
         logSensorData(sensorId, sensorStatus, voltage, isRepeatedAlarm, durationMinutes);
+        Ifttt::sendToGoogleSheets(sensorId, sensorStatus == 1 ? "Energized" : "De-energized", String(voltage), isRepeatedAlarm, durationMinutes);
     }
 
     // Helper function to log sensor data

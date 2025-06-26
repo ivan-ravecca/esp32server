@@ -2,6 +2,7 @@
 #define TIME_COMP_H
 
 #include <time.h>
+#include <Arduino.h>
 
 namespace TimeComp
 {
@@ -11,6 +12,7 @@ namespace TimeComp
 
     void setup();
     bool getFormattedTime(char *buffer, size_t bufferSize);
+    String getTimestamp();
 }
 
 #endif
