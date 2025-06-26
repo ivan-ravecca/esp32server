@@ -18,6 +18,7 @@ ESP32 - Acts as a gateway with WiFi connectivity, NTP time sync, and communicati
 - Arduino UNO board
 - ESP32 development board
 - USB cables for programming and debugging
+- IFTTT account for notifications and data logging
 
 ### Required Components
 
@@ -43,7 +44,8 @@ The Arduino UNO uses Software Serial to communicate with the ESP32:
    - Upload the UNO code to your Arduino UNO
 
 3. Configure WiFi credentials in the ESP32 WiFiComp.cpp file
-4. Connect the hardware according to the wiring diagrams
+4. Set up IFTTT webhooks and update the key in Ifttt.cpp file
+5. Connect the hardware according to the wiring diagrams
 
 ## Project Structure
 
@@ -55,6 +57,7 @@ The Arduino UNO uses Software Serial to communicate with the ESP32:
 │   ├── TimeComp.h/.cpp      # NTP time synchronization component
 │   ├── SerialComp.h/.cpp    # Serial communication component
 │   ├── CommandHandler.h/.cpp # Command processing component
+│   ├── Ifttt.h/.cpp          # IFTTT webhook integration component
 │   └── README.md
 └── docs/
     └── wiring_diagram.png TBD
@@ -76,6 +79,34 @@ Responses from ESP32 to UNO:
 1. TIME:[timestamp] - Current time in YYYY-MM-DD HH:MM:SS format
 2. ACK,[sensorID] - Acknowledgment of sensor update
 3. ERROR:[message] - Error message
+
+## IFTTT Integration
+
+The ESP32 sends data to IFTTT via webhooks in two ways:
+
+1. **Data Logging** (event: `sensor_data`)
+
+   - Sends all sensor updates to Google Sheets for logging
+   - Format:
+     - Value1: "Bomba [SensorID] esta [Status]"
+     - Value2: Voltage reading
+     - Value3: Duration in minutes (0 if not applicable)
+
+2. **Alert Notifications** (event: `sensor_alert`)
+   - Sends mobile notifications for repeated alarms
+   - Format:
+     - Value1: Alert message with sensor details
+     - Value2: Current timestamp
+
+### Setting up IFTTT
+
+1. Create an IFTTT account at [ifttt.com](https://ifttt.com)
+2. Create a new applet with webhook as the trigger
+3. Set up two different webhook events:
+   - "sensor_data" for Google Sheets logging
+   - "sensor_alert" for mobile notifications
+4. Get your webhook key from the IFTTT Webhooks service
+5. Update the `ifttt_key` in the Ifttt.cpp file with your key
 
 ## Contributing
 
