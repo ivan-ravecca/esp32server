@@ -1,6 +1,6 @@
 # ESP32-Arduino AC Line Monitor
 
-This project implements a dual AC line monitoring system using an Arduino UNO for sensing and an ESP32 for internet connectivity. The system reports AC line status (energized/de-energized) with timestamps, voltage readings, and alarm notifications.
+This project implements a dual AC line monitoring system using an Arduino UNO for sensing and an ESP32 for internet connectivity. The system reads reports from AC line status (energized/de-energized) with timestamps, voltage readings, and alarm notifications.
 
 ## System Overview
 
@@ -13,18 +13,13 @@ ESP32 - Acts as a gateway with WiFi connectivity, NTP time sync, and communicati
 
 ### Prerequisites
 
-- Arduino IDE installed
-- ESP32 board support installed in Arduino IDE
-- Arduino UNO board
 - ESP32 development board
 - USB cables for programming and debugging
 - IFTTT account for notifications and data logging
 
 ### Required Components
 
-- Arduino UNO microcontroller
 - ESP32 development board
-- Active buzzer module
 - Jumper wires for connections
 
 ### Connections
